@@ -26,7 +26,7 @@ def aggregate_column(df, features):
 This function processes the datetime object by converting it to timestamp object and extracting the day and the hour.
 """
 def date_conversion(df):
-    df["date"] = pd.to_datetime(df["date"], infer_datetime_format=True, format='ISO8601')
+    df["date"] = pd.to_datetime(df["date"], infer_datetime_format=True, format='mixed')
     df["hour"] = df["date"].dt.hour
     df["date"] = pd.to_datetime(df["date"].dt.date, infer_datetime_format=True)
 
