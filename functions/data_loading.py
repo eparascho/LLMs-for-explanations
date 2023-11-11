@@ -2,22 +2,53 @@ import pandas as pd
 
 """
 This function receives a list of column in the input and aggregates the values separately for each column/feature
-If it is numerical it calculates the average, and if it is categorical the most frequent value.
+If all input features are numerical it calculates the average, and if all input features are categorical or 
+some of the are categorical and other numerical it keeps all the values.
 """
-def aggregate_column(df, features):
+def aggregate_column(df, features, state):
     for el in ['id', 'date', 'hour']:
         features.remove(el)
 
     aggregated_df = pd.DataFrame(columns=['id', 'date', 'hour'])
-    for feature in features:
-        if isinstance(df[feature].iloc[0], int) or isinstance(df[feature].iloc[0], float):
-            df_feature = df.groupby(['id', 'date', 'hour'])[feature].mean().to_frame()
-            df_feature.reset_index(drop=False, inplace=True)
-            aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
-        elif type(df[feature].iloc[0] == str):
-            df_feature = df.groupby(['id', 'date', 'hour'])[feature].agg(lambda x: x.value_counts().index[0]).to_frame()
-            df_feature.reset_index(drop=False, inplace=True)
-            aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
+
+    if state == 'categoricals':
+        for feature in features:
+            if type(df[feature].iloc[0] == str):
+                print("in categoricals")
+                # get all possible values
+                df_feature = df.groupby(['id', 'date', 'hour'])[feature].agg(lambda l: list(set(l)) if isinstance(l, list) else l).to_frame()
+                df_feature.reset_index(drop=False, inplace=True)
+                aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
+            else:
+                print("Wrong type provided!")
+
+    elif state == 'numericals':
+        for feature in features:
+            if isinstance(df[feature].iloc[0], int) or isinstance(df[feature].iloc[0], float):
+                print("in numericals")
+                df_feature = df.groupby(['id', 'date', 'hour'])[feature].mean().to_frame()
+                df_feature.reset_index(drop=False, inplace=True)
+                aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
+            else:
+                print("Wrong type provided!")
+
+    elif state == 'categorical-numerical':
+        for feature in features:
+            if isinstance(df[feature].iloc[0], int) or isinstance(df[feature].iloc[0], float):
+                print("in numericals part")
+                # get the corresponding to categorical value
+                df_feature = df.groupby(['id', 'date', 'hour'])[feature].agg(lambda l: list(set(l)) if isinstance(l, list) else l).to_frame()
+                df_feature.reset_index(drop=False, inplace=True)
+                aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
+            elif type(df[feature].iloc[0] == str):
+                print("in categoricals part")
+                # get all possible values
+                df_feature = df.groupby(['id', 'date', 'hour'])[feature].agg(
+                    lambda l: list(set(l)) if isinstance(l, list) else l).to_frame()
+                df_feature.reset_index(drop=False, inplace=True)
+                aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
+            else:
+                print("Wrong type provided!")
 
     return aggregated_df
 
