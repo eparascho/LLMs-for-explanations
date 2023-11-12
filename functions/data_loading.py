@@ -26,7 +26,15 @@ def aggregate_column(df, features, state):
         for feature in features:
             if isinstance(df[feature].iloc[0], int) or isinstance(df[feature].iloc[0], float):
                 print("in numericals")
-                df_feature = df.groupby(['id', 'date', 'hour'])[feature].mean().to_frame()
+                if feature in ['calories', 'distance', 'steps']:
+                    # get the sum value for each hour
+                    df_feature = df.groupby(['id', 'date', 'hour'])[feature].sum().to_frame()
+                elif feature in ['altitude']:
+                    # get the max value for each hour
+                    df_feature = df.groupby(['id', 'date', 'hour'])[feature].max().to_frame()
+                else:
+                    # get the average value for each hour
+                    df_feature = df.groupby(['id', 'date', 'hour'])[feature].mean().to_frame()
                 df_feature.reset_index(drop=False, inplace=True)
                 aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
             else:
@@ -43,8 +51,28 @@ def aggregate_column(df, features, state):
             elif type(df[feature].iloc[0] == str):
                 print("in categoricals part")
                 # get all possible values
-                df_feature = df.groupby(['id', 'date', 'hour'])[feature].agg(
-                    lambda l: list(set(l)) if isinstance(l, list) else l).to_frame()
+                df_feature = df.groupby(['id', 'date', 'hour'])[feature].agg(lambda l: list(set(l)) if isinstance(l, list) else l).to_frame()
+                df_feature.reset_index(drop=False, inplace=True)
+                aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
+            else:
+                print("Wrong type provided!")
+
+    elif state == 'sleep':
+        for feature in features:
+            if isinstance(df[feature].iloc[0], int) or isinstance(df[feature].iloc[0], float):
+                print("in numericals part")
+                if feature in ['deep', 'rem', 'light', 'wake']:
+                    # get the sum value for each hour
+                    df_feature = df.groupby(['id', 'date', 'hour'])[feature].sum().to_frame()
+                else:
+                    # get the first value for each hour
+                    df_feature = df.groupby(['id', 'date', 'hour'])[feature].first().to_frame()
+                df_feature.reset_index(drop=False, inplace=True)
+                aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
+            elif type(df[feature].iloc[0] == bool):
+                print("in booleans part")
+                # get the maximum frequency
+                df_feature = df.groupby(['id', 'date', 'hour'])[feature].agg(lambda x: x.value_counts().index[0]).to_frame()
                 df_feature.reset_index(drop=False, inplace=True)
                 aggregated_df = aggregated_df.merge(df_feature, how='outer', on=['id', 'date', 'hour'])
             else:
