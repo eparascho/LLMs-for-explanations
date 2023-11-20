@@ -163,3 +163,4 @@ cython_debug/
 /data/fitbit_surveys.pkl
 /data/fitbit_surveys_semas.pkl
 /data/encoded_training_df.pkl
+/data/basic_preprocessed_training_df.pkl
