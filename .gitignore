@@ -165,3 +165,8 @@ cython_debug/
 /data/encoded_training_df.pkl
 /data/basic_preprocessed_training_df.pkl
 /data/cleaned_encoded_training_df.pkl
+/data/after_behavior_granularities_df.pkl
+/data/after_duration_exercise_training_df.pkl
+/data/after_past_day_training_df.pkl
+/data/after_rest_day_training_df.pkl
+/data/after_whole_day_training_df.pkl
