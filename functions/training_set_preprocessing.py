@@ -97,3 +97,31 @@ def experiments_dates(cleaned_training_df):
     # second_users = set(list(second_round['id'].unique()))
     # if first_users & second_users:
     #     print("The user with id:", first_users & second_users, "provided data in both rounds of the experiment.")
+
+
+"""
+This function ...
+"""
+def replace_nan_0_with_mean():
+    print()
+
+
+"""
+This function ...
+"""
+def replace_nan_with_0():
+    print()
+
+
+"""
+This function ...
+"""
+def replace_nan_with_mean():
+    print()
+
+
+"""
+This function ...
+"""
+def replace_nan_with_common():
+    print()
