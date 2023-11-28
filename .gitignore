@@ -171,3 +171,5 @@ cython_debug/
 /data/granularities_temps/after_rest_day_training_df.pkl
 /data/granularities_temps/after_whole_day_training_df.pkl
 /data/preprocessing_temps/dropped_columns_training_df.pkl
+/data/preprocessing_temps/nan_preprocessed_training_df.pkl
+/data/preprocessing_temps/final_preprocessed_training_df.pkl

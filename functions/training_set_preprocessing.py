@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 
-
 """
 This function encodes the columns of the features that contain np.ndarrays as values into single value columns. 
 In more detail, it receives as input 2 columns one categorical and one numerical and it creates one column for each unique value in the 
@@ -80,8 +79,8 @@ def experiments_dates(cleaned_training_df):
     cleaned_training_df['date'] = pd.to_datetime(cleaned_training_df['date'].astype("str"), format='%Y-%m-%d')
 
     # find the official experiment dates
-    experiments_df = cleaned_training_df.loc[((cleaned_training_df['date'] > '2021-05-23') & (cleaned_training_df['date'] < '2021-07-27')) | (
-                    (cleaned_training_df['date'] > '2021-11-14') & (cleaned_training_df['date'] < '2022-01-18'))]
+    experiments_df = cleaned_training_df.loc[((cleaned_training_df['date'] > '2021-05-23') & (cleaned_training_df['date'] < '2021-07-27'))
+                                             | ((cleaned_training_df['date'] > '2021-11-14') & (cleaned_training_df['date'] < '2022-01-18'))]
     experiments_df.reset_index(inplace=True, drop=True)
 
     # isolate the dates out of the official experiment
@@ -100,28 +99,51 @@ def experiments_dates(cleaned_training_df):
 
 
 """
-This function ...
+This function replaces all the NaN and 0 values of the given columns with the user's mean if it is not NaN, otherwise with all users mean.
+It returns the dataframe filled with the corresponding mean values in these columns.
 """
-def replace_nan_0_with_mean():
-    print()
+def replace_nan_0_with_mean(training_df, features):
+    for feature in features:
+        # user's mean
+        user_means = training_df.groupby('id')[feature].mean()
+        # general mean for user's that do not have user mean
+        user_means = user_means.fillna(training_df[feature].mean())
+        # replace
+        training_df[feature] = training_df.apply(lambda row: row[feature] if pd.notna(row[feature]) and row[feature] != 0
+        else user_means[row['id']], axis=1)
+
+    return training_df
 
 
 """
-This function ...
+This function replaces all the NaN values of the given columns with 0 values.
+It returns the dataframe filled with 0 values in these columns.
 """
-def replace_nan_with_0():
-    print()
+def replace_nan_with_0(training_df, features):
+    for feature in features:
+        training_df[feature] = training_df[feature].fillna(0)
+
+    return training_df
 
 
 """
-This function ...
+This function replaces all the NaN values of the given columns with the user's mean if it is not NaN, otherwise with all users mean.
+It returns the dataframe filled with the corresponding mean values in these columns.
 """
-def replace_nan_with_mean():
-    print()
+def replace_nan_with_mean(training_df, features):
+    for feature in features:
+        user_means = training_df.groupby('id')[feature].mean()
+        training_df[feature] = training_df[feature].fillna(training_df['id'].map(user_means).fillna(training_df[feature].mean()))
+
+    return training_df
 
 
 """
-This function ...
+This function replaces all the NaN values of the given columns with the most common value.
+It returns the dataframe filled with the corresponding common values in these columns.
 """
-def replace_nan_with_common():
-    print()
+def replace_nan_with_common(training_df, features):
+    for feature in features:
+        training_df[feature] = training_df[feature].fillna(training_df[feature].mode().iloc[0])
+
+    return training_df
