@@ -173,3 +173,5 @@ cython_debug/
 /data/preprocessing_temps/dropped_columns_training_df.pkl
 /data/preprocessing_temps/nan_preprocessed_training_df.pkl
 /data/preprocessing_temps/final_preprocessed_training_df.pkl
+/data/preprocessing_temps/date_engineered_training_df.pkl
+/data/preprocessing_temps/preprocessed_training_df.pkl

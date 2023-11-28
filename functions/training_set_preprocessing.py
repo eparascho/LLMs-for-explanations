@@ -1,3 +1,4 @@
+import holidays
 import numpy as np
 import pandas as pd
 
@@ -147,3 +148,71 @@ def replace_nan_with_common(training_df, features):
         training_df[feature] = training_df[feature].fillna(training_df[feature].mode().iloc[0])
 
     return training_df
+
+
+"""
+This function applies sin transformation to the hour or day to capture dates' cyclic behavior.
+It returns the sin transformed hour or day value.
+"""
+def sin_transform(values):
+    return np.sin(2 * np.pi * values / len(set(values)))
+
+
+"""
+This function applies cos transformation to the hour or day to capture dates' cyclic behavior.
+It returns the cos transformed hour or day value.
+"""
+def cos_transform(values):
+    return np.cos(2 * np.pi * values / len(set(values)))
+
+
+"""
+This function calculates if a day belongs to the weekend (1.0) dates or to the weekdays (0.0).
+It returns the input dataframe with an additional column representing if it is weekend or weekdays.
+"""
+def is_weekend(df):
+    df.loc[:, "is_weekend"] = df.date.dt.dayofweek  # returns 0-4 for Monday-Friday and 5-6 for Weekend
+    df.loc[:, 'is_weekend'] = df['is_weekend'].apply(lambda d: 1.0 if d > 4 else 0.0)
+
+    return df
+
+
+"""
+This function calculates if a day is holiday in Greece, Cyprus, Sweden or Italy, (1.0) or not (0.0).
+It returns the input dataframe with an additional column representing if it is holiday or not.
+"""
+def is_holiday(df):
+    gr_holidays = list(holidays.GR(years=[2021, 2022]).keys())
+    swe_holidays = list(holidays.SWE(years=[2021, 2022]).keys())
+    cy_holidays = list(holidays.CY(years=[2021, 2022]).keys())
+    it_holidays = list(holidays.IT(years=[2021, 2022]).keys())
+
+    df.loc[:, 'is_holiday'] = df.date.apply(lambda d: 1.0 if (
+            (d in gr_holidays) or (d in swe_holidays) or (d in cy_holidays) or (d in it_holidays)) else 0.0)
+
+    return df
+
+
+"""
+This function implements the date engineering of the dataframe. In more detail, it calculates the sin and cos transformations 
+of the hour and day, it calculates if a day belongs to weekdays or to weekend, and if a day is holiday or not.
+It returns the date engineered dataframe without the 'date' column and with the above mentioned ones.
+"""
+def date_engineering(df):
+
+    # is weekend or weekday
+    is_weekend(df)
+
+    # is holiday or not
+    is_holiday(df)
+
+    # sin and cos transformations
+    df["day"] = df["date"].apply(lambda x: x.day)
+    df["hour"] = df["date"].apply(lambda x: x.hour)
+    df["day_sin"] = sin_transform(df["day"])
+    df["hour_sin"] = sin_transform(df["hour"])
+    df["day_cos"] = cos_transform(df["day"])
+    df["hour_cos"] = cos_transform(df["hour"])
+    df = df.drop(columns=['date', 'day', 'hour'])
+
+    return df
