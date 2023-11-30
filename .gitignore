@@ -176,3 +176,6 @@ cython_debug/
 /data/preprocessing_temps/date_engineered_training_df.pkl
 /data/preprocessing_temps/preprocessed_training_df.pkl
 /data/feature_elimination_temps/correlation_training_df.pkl
+/data/clustering_df.csv
+/data/raw_clustering_df.csv
+/data/preprocessing_temps/dropped_rows_training_df.pkl
