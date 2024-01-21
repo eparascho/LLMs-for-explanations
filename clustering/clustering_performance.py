@@ -1,0 +1,24 @@
+"""
+This python program evaluates the performance of different clustering algorithms.
+"""
+
+
+import pandas as pd
+from functions.clustering import evaluation_metrics
+
+
+if __name__ == '__main__':
+    # read data
+    data = pd.read_pickle('../data/clustering_df.pkl')
+
+    # prepare data for clustering (store and then remove id)
+    user_id = data['id']
+    data.drop(columns=['id'], inplace=True)
+
+    # evaluate k-means
+    kmeans = pd.read_csv('../data/clustering_results/kmeans_results.csv')
+    kmeans_y = kmeans.iloc[:, -1]
+    evaluation_metrics(data, kmeans_y)
+
+    # evaluate spectral
+    # ...

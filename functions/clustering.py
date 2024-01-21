@@ -78,7 +78,7 @@ def perform_clustering(model, data, user_id):
     model_data['cluster'] = y
     model_data = pd.concat([user_id, model_data], axis=1, ignore_index=True)
 
-    return y, model_data
+    return model_data
 
 
 """
