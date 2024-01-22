@@ -101,6 +101,6 @@ if __name__ == '__main__':
     start = time.time()
     print("Clustering with Spectral ... ")
     spectral = SpectralClustering(n_clusters=2, assign_labels='cluster_qr', random_state=0)
-    results = perform_clustering(spectral, data)
+    results = perform_clustering(spectral, data, user_id)
     print("Spectral finished after", time.time() - start)
     results.to_csv('../data/clustering_results/spectral_results.csv')
