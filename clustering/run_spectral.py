@@ -1,3 +1,8 @@
+"""
+This python program performs the parametric multi-view spectral clustering algorithm.
+"""
+
+
 import sys
 import time
 import pandas as pd
