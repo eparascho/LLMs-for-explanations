@@ -1,5 +1,5 @@
 """
-This python program performs the non-parametric hierarchical density-based DBSCAN clustering algorithm.
+This python program performs the non-parametric hierarchical density-based HDBSCAN clustering algorithm.
 """
 
 
@@ -7,7 +7,6 @@ import sys
 import time
 import pandas as pd
 from sklearn.cluster import HDBSCAN
-from sklearn.model_selection import RandomizedSearchCV
 
 
 """
@@ -36,8 +35,7 @@ if __name__ == '__main__':
     # perform hdbscan clustering
     start = time.time()
     print("Clustering with HDBSCAN ... ")
-
-    hdbscan = HDBSCAN(min_cluster_size=1000)
-    y, results = perform_clustering(hdbscan, data, user_id)
+    hdbscan = HDBSCAN(min_cluster_size=5500, min_samples=60)
+    results = perform_clustering(hdbscan, data, user_id)
     print("HDBSCAN finished after", time.time() - start)
     results.to_csv('../data/clustering_results/hdbscan_results.csv')

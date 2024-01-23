@@ -20,5 +20,8 @@ if __name__ == '__main__':
     kmeans_y = kmeans.iloc[:, -1]
     evaluation_metrics(data, kmeans_y)
 
-    # evaluate spectral
-    # ...
+    # evaluate HDBSCAN
+    hdbscan = pd.read_csv('../data/clustering_results/hdbscan_results.csv')
+    hdbscan_y = hdbscan.iloc[:, -1]
+    print(hdbscan_y.nunique())
+    evaluation_metrics(data, hdbscan_y)
