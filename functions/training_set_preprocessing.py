@@ -213,6 +213,6 @@ def date_engineering(df):
     df["hour_sin"] = sin_transform(df["hour"])
     df["day_cos"] = cos_transform(df["day"])
     df["hour_cos"] = cos_transform(df["hour"])
-    df = df.drop(columns=['date', 'day', 'hour'])
+    df = df.drop(columns=['day', 'hour'])
 
     return df
