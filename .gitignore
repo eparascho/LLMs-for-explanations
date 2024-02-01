@@ -181,6 +181,5 @@ cython_debug/
 /data/preprocessing_temps/dropped_rows_training_df.pkl
 /data/clustering_results/hdbscan_results.csv
 /data/clustering_df.pkl
-/data/robp/clustering_df.csv
-/data/robp/raw_clustering_df.csv
-/data/labeling_visualizations.pkl
+/data/labeling_visualizations/hdbscan_labeling.pkl
+/data/labeling_visualizations/kmeans_labeling.pkl
