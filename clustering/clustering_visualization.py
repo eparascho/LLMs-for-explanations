@@ -19,7 +19,7 @@ def boxplot(data, col, where):
         patch.set_facecolor(color)
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/hdbscan_' + col + '.png'
+    filename = '../images/' + where + '/kmeans_' + col + '.png'
     plt.savefig(filename)
 
 
@@ -36,7 +36,7 @@ def bar_plot(data, col, where):
     category_counts.plot(kind='bar', color=colors, figsize=(8, 6))
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/hdbscan_' + col + '.png'
+    filename = '../images/' + where + '/kmeans_' + col + '.png'
     plt.savefig(filename)
 
 
@@ -71,8 +71,8 @@ def visualize_labeling(data):
 
 if __name__ == '__main__':
     # visualize the training features along with the HDBSCAN results
-    data = pd.read_pickle('../data/labeling_visualizations/hdbscan_labeling_processed.pkl')
-    # visualize_training(data)
+    data = pd.read_pickle('../data/labeling_visualizations/kmeans_labeling_processed.pkl')
+    visualize_training(data)
 
     # visualize the labeling features along with the HDBSCAN results
     visualize_labeling(data)
