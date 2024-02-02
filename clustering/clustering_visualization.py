@@ -61,7 +61,7 @@ def visualize_labeling(data):
         try:
             # for the arithmetic features: visualize the clean data with a boxplot
             boxplot(boxplot_data, col, 'clustering_labeling')
-        except Exception as e1:
+        except Exception:
             try:
                 # for the categorical features: visualize the clean data with a bar plot
                 bar_plot(boxplot_data, col, 'clustering_labeling')
@@ -71,7 +71,7 @@ def visualize_labeling(data):
 
 if __name__ == '__main__':
     # visualize the training features along with the HDBSCAN results
-    data = pd.read_pickle('../data/labeling_visualizations/hdbscan_labeling.pkl')
+    data = pd.read_pickle('../data/labeling_visualizations/hdbscan_labeling_processed.pkl')
     # visualize_training(data)
 
     # visualize the labeling features along with the HDBSCAN results
