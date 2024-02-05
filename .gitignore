@@ -159,9 +159,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 /config.env
-/data/fitbit.pkl
-/data/fitbit_surveys.pkl
-/data/fitbit_surveys_semas.pkl
+/data/loading_final/fitbit.pkl
+/data/loading_final/fitbit_surveys.pkl
+/data/loading_final/fitbit_surveys_semas.pkl
 /data/preprocessing_temps/encoded_training_df.pkl
 /data/preprocessing_temps/basic_preprocessed_training_df.pkl
 /data/preprocessing_temps/cleaned_encoded_training_df.pkl
@@ -176,11 +176,9 @@ cython_debug/
 /data/preprocessing_temps/date_engineered_training_df.pkl
 /data/preprocessing_temps/preprocessed_training_df.pkl
 /data/feature_elimination_temps/correlation_training_df.pkl
-/data/clustering_df.csv
-/data/raw_clustering_df.csv
 /data/preprocessing_temps/dropped_rows_training_df.pkl
 /data/clustering_results/hdbscan_results.csv
-/data/clustering_df.pkl
+/data/clustering_input/clustering_df_full.pkl
 /data/labeling_visualizations/hdbscan_labeling.pkl
 /data/labeling_visualizations/kmeans_labeling.pkl
 /data/labeling_visualizations/hdbscan_labeling_processed.pkl
