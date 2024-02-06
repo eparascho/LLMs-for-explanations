@@ -14,7 +14,7 @@ from sklearn.cluster import KMeans, SpectralClustering
 """
 This function implements the elbow method to find the optimal number of clusters.
 """
-def elbow_method(model_name, data):
+def elbow_method(model_name, data_version, data):
     # perform elbow method
     print("Performing the elbow method ... ")
     start = time.time()
@@ -38,14 +38,14 @@ def elbow_method(model_name, data):
     plt.title("Elbow Plot")
     plt.xlabel("Number of Clusters")
     plt.ylabel("SSE")
-    filename = '../images/elbow_' + model_name + '.png'
+    filename = '../images/elbow_' + model_name + '_' + data_version + '.png'
     plt.savefig(filename)
 
 
 """
 This function implements the silhouette score method to find the optimal number of clusters.
 """
-def silhouette_method(model_name, data):
+def silhouette_method(model_name, data_version, data):
     # perform silhouette method
     print("Performing the silhouette method ... ")
     start = time.time()
@@ -69,7 +69,7 @@ def silhouette_method(model_name, data):
     plt.title("Silhouette Plot")
     plt.xlabel("Number of Clusters")
     plt.ylabel("Silhouette score")
-    filename = '../images/silhouette_' + model_name + '.png'
+    filename = '../images/elbow_' + model_name + '_' + data_version + '.png'
     plt.savefig(filename)
 
 
@@ -94,13 +94,14 @@ if __name__ == '__main__':
 
     # prepare data for clustering (store and then remove id)
     user_id = data['id']
-    data.drop(columns=['id'], inplace=True)
+    dates = data['date']
+    data.drop(columns=['id', 'date'], inplace=True)
 
     # find optimal k for spectral with the elbow method
-    elbow_method('spectral', data)
+    elbow_method('spectral', 'categorical', data)
 
     # find optimal k for spectral with the silhouette method
-    silhouette_method('spectral', data)
+    silhouette_method('spectral', 'categorical', data)
 
     # perform spectral clustering
     start = time.time()
