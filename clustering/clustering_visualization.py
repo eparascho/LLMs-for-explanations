@@ -22,7 +22,7 @@ def boxplot(data, col, where):
     annotator.apply_and_annotate()
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/kmeans_' + col + '.png'
+    filename = '../images/' + where + '/kmeans_categories_' + col + '.png'
     plt.savefig(filename)
 
 
@@ -43,7 +43,7 @@ def bar_plot(data, col, where):
     annotator.apply_and_annotate()
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/kmeans_' + col + '.png'
+    filename = '../images/' + where + '/kmeans_categories_' + col + '.png'
     plt.savefig(filename)
 
 
@@ -60,7 +60,7 @@ def visualize_training(data):
 This function visualizes the labeling features compared to the assigned cluster from the clustering algorithm.
 """
 def visualize_labeling(data):
-    cols = list(data.columns[39:])
+    cols = list(data.columns[20:])  # 39 for full features | 20 for categories features
     for col in cols:
         # keep only the data that does not contain NaN values in this specific feature
         visualize_data = data.dropna(subset=[col])
@@ -78,7 +78,7 @@ def visualize_labeling(data):
 
 if __name__ == '__main__':
     # visualize the training features along with the clustering results
-    data = pd.read_pickle('../data/labeling_visualizations/kmeans_labeling_processed.pkl')
+    data = pd.read_pickle('../data/labeling_visualizations/kmeans_categories_labeling.pkl')
     # visualize_training(data)
 
     # visualize the labeling features along with the clustering results
