@@ -24,19 +24,16 @@ def silhouette_scorer(model, data):
 
 
 if __name__ == '__main__':
-    # read arguments from command line
-    input_file = sys.argv[1]
-
-    # load the input dataframe
-    data = pd.read_pickle(input_file)
-    # data = pd.read_pickle('../data/clustering_df.pkl') # for eps
+    # read data
+    data = pd.read_pickle('../data/clustering_input/clustering_df_categories.pkl')
 
     # prepare data for clustering (store and then remove id)
     user_id = data['id']
-    data.drop(columns=['id'], inplace=True)
+    dates = data['date']
+    data.drop(columns=['id', 'date'], inplace=True)
 
     # --------------- min_samples parameter (vm) --------------- #
-    min_samples = [60, 70, 80, 100]
+    min_samples = [20, 30, 40, 50]
     print("Performing search for min_samples ... ")
     start = time.time()
     results = []
@@ -53,7 +50,7 @@ if __name__ == '__main__':
 
     # --------------- eps parameter (locally) --------------- #
     # calculate the average distance between each point in the dataset and its min_samples nearest neighbors
-    neighbors = NearestNeighbors(n_neighbors=80)
+    neighbors = NearestNeighbors(n_neighbors=50)
     neighbors_fit = neighbors.fit(data)
     distances, indices = neighbors_fit.kneighbors(data)
     # visualize the distances
@@ -63,13 +60,13 @@ if __name__ == '__main__':
     plt.show()
 
     # eps hyperparameter search (vm)
-    eps = [0.2, 0.25, 0.3]
+    eps = [0.08, 0.1, 0.12]
     print("Performing search for eps ... ")
     start = time.time()
     results = []
     for ep in eps:
         print("for parameter:", ep)
-        model = DBSCAN(eps=ep, min_samples=80)  # default eps
+        model = DBSCAN(eps=ep, min_samples=50)
         score = silhouette_scorer(model, data)
         results.append((ep, score))
     print("finished after", time.time() - start)
