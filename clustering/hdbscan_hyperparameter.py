@@ -23,15 +23,13 @@ def silhouette_scorer(model, data):
 
 
 if __name__ == '__main__':
-    # read arguments from command line
-    input_file = sys.argv[1]
-
-    # load the input dataframe
-    data = pd.read_pickle(input_file)
+    # read data
+    data = pd.read_pickle('../data/clustering_input/clustering_df_categories.pkl')
 
     # prepare data for clustering (store and then remove id)
     user_id = data['id']
-    data.drop(columns=['id'], inplace=True)
+    dates = data['date']
+    data.drop(columns=['id', 'date'], inplace=True)
 
     # specify parameters and distributions to sample from
     param_dist = {'min_samples': [60, 550, 1600, 4000],

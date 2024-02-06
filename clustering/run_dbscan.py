@@ -22,7 +22,7 @@ def perform_clustering(model, data, metadata):
 
 if __name__ == '__main__':
     # read data
-    data = pd.read_pickle('../data/clustering_input/clustering_df_categories.pkl')
+    data = pd.read_pickle('../data/clustering_input/clustering_df_full.pkl')
 
     # prepare data for clustering (store and then remove id)
     user_id = data['id']
@@ -32,8 +32,8 @@ if __name__ == '__main__':
     # perform dbscan clustering
     start = time.time()
     print("Clustering with DBSCAN ... ")
-    dbscan = DBSCAN(min_samples=50, eps=0.1)
+    dbscan = DBSCAN(min_samples=80, eps=0.3)
     metadata = pd.concat([user_id, dates], axis=1)
     results = perform_clustering(dbscan, data, metadata)
     print("DBSCAN finished after", time.time() - start)
-    results.to_csv('../data/clustering_results/dbscan_results_categories.csv', index=False)
+    results.to_csv('../data/clustering_results/dbscan_results_full.csv', index=False)
