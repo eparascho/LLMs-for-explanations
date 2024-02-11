@@ -21,7 +21,7 @@ def boxplot(data, col, where):
     annotator.apply_and_annotate()
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/kmeans_categories_' + col + '.png'
+    filename = '../images/' + where + '/hdbscan_full_' + col + '.png'
     plt.savefig(filename)
 
 
@@ -42,7 +42,7 @@ def bar_plot(data, col, where):
     annotator.apply_and_annotate()
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/kmeans_full_' + col + '.png'
+    filename = '../images/' + where + '/hdbscan_full_' + col + '.png'
     plt.savefig(filename)
 
 
@@ -72,6 +72,9 @@ def visualize_labeling(data):
     for numerical in numerical_features:
         # keep only the data that does not contain NaN values in this specific feature
         visualize_data = data.dropna(subset=[numerical])
+        # for the features resting_heart_rate, stress_score and responsiveness_points keep only the rows that do not contain 0 values
+        if numerical in ['resting_heart_rate', 'stress_score', 'responsiveness_points']:
+            visualize_data = visualize_data[visualize_data[numerical] != 0]
         visualize_data['cluster'] = visualize_data['cluster'].astype(str)
         # for the arithmetic features: visualize the clean data with a boxplot
         boxplot(visualize_data, numerical, 'clustering_labeling')
@@ -93,7 +96,7 @@ def visualize_labeling(data):
 
 if __name__ == '__main__':
     # visualize the training features along with the clustering results
-    data = pd.read_pickle('../data/labeling_visualizations/kmeans_categories_labeling.pkl')
+    data = pd.read_pickle('../data/labeling_visualizations/hdbscan_full_labeling.pkl')
     # visualize_training(data)
 
     # visualize the labeling features along with the clustering results
