@@ -11,18 +11,18 @@ from functions.clustering import elbow_method, silhouette_method, perform_cluste
 
 if __name__ == '__main__':
     # read data
-    data = pd.read_pickle('../data/clustering_input/clustering_df_categories.pkl')
+    data = pd.read_pickle('../data/clustering_input/clustering_df_clean.pkl')
 
-    # prepare data for clustering (store and then remove id)
+    # prepare data for clustering (store nd then remove id)
     user_id = data['id']
     dates = data['date']
     data.drop(columns=['id', 'date'], inplace=True)
 
     # find optimal k for k-means with the elbow method
-    # elbow_method('kmeans', 'categories', data)
+    # elbow_method('kmeans', 'clean', data)
 
     # find optimal k for k-means with the silhouette method
-    # silhouette_method('kmeans', 'categories', data)
+    # silhouette_method('kmeans', 'clean', data)
 
     # perform k-means clustering
     start = time.time()
@@ -31,4 +31,4 @@ if __name__ == '__main__':
     metadata = pd.concat([user_id, dates], axis=1)
     results = perform_clustering(kmeans, data, metadata)
     print("K-means finished after", time.time() - start)
-    results.to_csv('../data/clustering_results/kmeans_results_categories.csv', index=False)
+    results.to_csv('../data/clustering_results/kmeans_results_clean.csv', index=False)

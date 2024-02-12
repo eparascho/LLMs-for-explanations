@@ -189,3 +189,5 @@ cython_debug/
 /data/preprocessing_final/training_df_unprocessed.pkl
 /data/preprocessing_final/labeling_df_processed.pkl
 /data/labeling_visualizations/hdbscan_categories_labeling.pkl
+/data/clustering_input/clustering_df_clean.pkl
+/data/labeling_visualizations/kmeans_clean_labeling.pkl

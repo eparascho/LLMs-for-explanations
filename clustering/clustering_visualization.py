@@ -16,12 +16,12 @@ def boxplot(data, col, where):
     plt.figure(figsize=(8, 6))
     ax = sns.boxplot(x='cluster', y=col, data=data, palette=['#ffcc99', '#ccccff', '#ffffcc', '#ccffe6', '#b3e6ff'])
     pairs = [(str(i), str(j)) for i in data['cluster'].unique() for j in data['cluster'].unique() if i < j]
-    annotator = Annotator(ax, pairs, data=data, x='cluster', y=col)
-    annotator.configure(test='Mann-Whitney', text_format='star', loc='inside', verbose=2)
-    annotator.apply_and_annotate()
+    # annotator = Annotator(ax, pairs, data=data, x='cluster', y=col)
+    # annotator.configure(test='Mann-Whitney', text_format='star', loc='inside', verbose=2)
+    # annotator.apply_and_annotate()
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/hdbscan_full_' + col + '.png'
+    filename = '../images/' + where + '/kmeans_clean_' + col + '.png'
     plt.savefig(filename)
 
 
@@ -42,7 +42,7 @@ def bar_plot(data, col, where):
     annotator.apply_and_annotate()
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/hdbscan_full_' + col + '.png'
+    filename = '../images/' + where + '/kmeans_clean_' + col + '.png'
     plt.savefig(filename)
 
 
@@ -96,7 +96,7 @@ def visualize_labeling(data):
 
 if __name__ == '__main__':
     # visualize the training features along with the clustering results
-    data = pd.read_pickle('../data/labeling_visualizations/hdbscan_full_labeling.pkl')
+    data = pd.read_pickle('../data/labeling_visualizations/kmeans_clean_labeling.pkl')
     # visualize_training(data)
 
     # visualize the labeling features along with the clustering results
