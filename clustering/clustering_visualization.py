@@ -16,9 +16,9 @@ def boxplot(data, col, where):
     plt.figure(figsize=(8, 6))
     ax = sns.boxplot(x='cluster', y=col, data=data, palette=['#ffcc99', '#ccccff', '#ffffcc', '#ccffe6', '#b3e6ff'])
     pairs = [(str(i), str(j)) for i in data['cluster'].unique() for j in data['cluster'].unique() if i < j]
-    # annotator = Annotator(ax, pairs, data=data, x='cluster', y=col)
-    # annotator.configure(test='Mann-Whitney', text_format='star', loc='inside', verbose=2)
-    # annotator.apply_and_annotate()
+    annotator = Annotator(ax, pairs, data=data, x='cluster', y=col)
+    annotator.configure(test='Mann-Whitney', text_format='star', loc='inside', verbose=2)
+    annotator.apply_and_annotate()
     plt.xlabel('Cluster')
     plt.ylabel(col)
     filename = '../images/' + where + '/kmeans_clean_' + col + '.png'
