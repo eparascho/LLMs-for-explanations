@@ -31,16 +31,15 @@ def visualize_labeling(data):
     'positive_affect_score', 'negative_affect_score', 'stai_stress', 'ttm_stage', 'dramatic_relief_category', 'environmental_reevaluation_category', 'self_reevaluation_category',
     'social_liberation_category', 'reinforcement_management_category', 'self_liberation_category', 'mood']
 
-    for numerical in numerical_features:
-        print(numerical)
-        # keep only the data that does not contain NaN values in this specific feature
-        visualize_data = data.dropna(subset=[numerical])
-        # for the features resting_heart_rate, stress_score and responsiveness_points keep only the rows that do not contain 0 values
-        if numerical in ['resting_heart_rate', 'stress_score', 'responsiveness_points']:
-            visualize_data = visualize_data[visualize_data[numerical] != 0]
-        visualize_data['cluster'] = visualize_data['cluster'].astype(str)
-        # for the arithmetic features: visualize the clean data with a boxplot
-        boxplot(visualize_data, numerical, 'clustering_labeling', 'hdbscan', 'full')
+    # for numerical in numerical_features:
+    #     # keep only the data that does not contain NaN values in this specific feature
+    #     visualize_data = data.dropna(subset=[numerical])
+    #     # for the features resting_heart_rate, stress_score and responsiveness_points keep only the rows that do not contain 0 values
+    #     if numerical in ['resting_heart_rate', 'stress_score', 'responsiveness_points']:
+    #         visualize_data = visualize_data[visualize_data[numerical] != 0]
+    #     visualize_data['cluster'] = visualize_data['cluster'].astype(str)
+    #     # for the arithmetic features: visualize the clean data with a boxplot
+    #     boxplot(visualize_data, numerical, 'clustering_labeling', 'hdbscan', 'full')
 
     for categorical in categorical_features:
         print(categorical)
@@ -48,11 +47,11 @@ def visualize_labeling(data):
         visualize_data = data.dropna(subset=[categorical])
         visualize_data['cluster'] = visualize_data['cluster'].astype(str)
         # for the categorical features: visualize the clean data with a bar plot
-        bar_plot(visualize_data, categorical, 'clustering_labeling', 'hdbscan', 'full')
+        bar_plot(visualize_data, categorical, 'clustering_labeling', 'kmeans', 'full')
 
 
 if __name__ == '__main__':
-    data = pd.read_pickle('../data/labeling_visualizations/hdbscan_full_labeling.pkl')
+    data = pd.read_pickle('../data/labeling_visualizations/kmeans_full_labeling.pkl')
 
     # visualize the training features along with the clustering results
     # visualize_training(data)
