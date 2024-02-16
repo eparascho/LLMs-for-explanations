@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
     # read data
-    data = pd.read_csv('../data/clustering_results/kmeans_results_full.csv')
+    data = pd.read_csv('../data/clustering_results/kmeans_results_clean.csv')
 
     # prepare data for clustering (store and then remove id)
     clusters = data['cluster']
@@ -17,5 +17,5 @@ if __name__ == '__main__':
 
     # visualize data through TSNE
     projection = TSNE().fit_transform(data)
-    plt.scatter(*projection.T, alpha=0.1, s=6, c=colors)
+    plt.scatter(*projection.T, alpha=0.1, s=3, c=colors)
     plt.show()

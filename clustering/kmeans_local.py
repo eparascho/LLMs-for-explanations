@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # read data
     data = pd.read_pickle('../data/clustering_input/clustering_df_clean.pkl')
 
-    # prepare data for clustering (store nd then remove id)
+    # prepare data for clustering (store and then remove id)
     user_id = data['id']
     dates = data['date']
     data.drop(columns=['id', 'date'], inplace=True)
