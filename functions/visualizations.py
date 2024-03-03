@@ -38,7 +38,7 @@ def boxplot(data, col, where, model, version):
 """
 This function creates and saves a bar plot.
 """
-def bar_plot(data, col, where, model, version):
+def bar_plot(data, col, model, version):
     plt.figure(figsize=(8, 6))
     visualize_data = data.groupby(['cluster', col]).size().reset_index(name='count')
     if col in ['positive_affect_score', 'negative_affect_score', 'stai_stress', 'extraversion', 'agreeableness', 'conscientiousness', 'stability', 'intellect', 'drag_relief_category',
@@ -52,10 +52,9 @@ def bar_plot(data, col, where, model, version):
         custom_order = ['Precontemplation', 'Contemplation', 'Preparation', 'Action', 'Maintenance']
     else:
         custom_order = visualize_data[col].unique()
-    ax = sns.barplot(x='cluster', y='count', data=visualize_data, hue=col, hue_order=custom_order, palette=['#80d4ff', '#ff99ff', '#33ff77', '#ffad33', '#ffff4d', '#00b300', '#ff5c33', '#6666ff', '#acac86', '#00e6b8',
+    sns.barplot(x='cluster', y='count', data=visualize_data, hue=col, hue_order=custom_order, palette=['#80d4ff', '#ff99ff', '#33ff77', '#ffad33', '#ffff4d', '#00b300', '#ff5c33', '#6666ff', '#acac86', '#00e6b8',
                                                                                     '#bf8040', '#8c8c8c', '#cc0044'])
-    do_annotation(visualize_data, ax, col, 'barplot')
     plt.xlabel('Cluster')
     plt.ylabel(col)
-    filename = '../images/' + where + '/' + model + '/' + col + '_' + version + '.png'
+    filename = '../../images/categorical_features/' + model + '/' + col + '_' + version + '.png'
     plt.savefig(filename)
