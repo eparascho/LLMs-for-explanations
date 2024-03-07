@@ -3,6 +3,7 @@ This file contains the functions for the visualizations.
 """
 
 
+import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from statannotations.Annotator import Annotator
@@ -55,3 +56,50 @@ def bar_plot(data, col, model, version):
     plt.ylabel(col)
     filename = '../../images/categorical_features/' + model + '/' + col + '_' + version + '.png'
     plt.savefig(filename)
+
+
+"""
+This function creates and saves a histogram.
+"""
+def histogram(data, col):
+    if col == 'responsiveness_points' or col == 'resting_heart_rate' or col == 'stress_score':
+        data = data[data[col] != 0]  # remove 0s from the data
+
+    # dataframe for each cluster
+    c0_df = data[data['cluster'] == 0]
+    c1_df = data[data['cluster'] == 1]
+    c2_df = data[data['cluster'] == 2]
+    c3_df = data[data['cluster'] == 3]
+
+    # plot histograms
+    plt.figure(figsize=(8, 6))
+    sns.kdeplot(data=c0_df[col], label='C0', color='#9999ff', fill=True, alpha=0.3)
+    sns.kdeplot(data=c1_df[col], label='C1', color='#ffff66', fill=True, alpha=0.3)
+    sns.kdeplot(data=c2_df[col], label='C2', color='#66ffb5', fill=True, alpha=0.3)
+    sns.kdeplot(data=c3_df[col], label='C3', color='#ffb366', fill=True, alpha=0.3)
+    plt.xlabel(col)
+    plt.ylabel('frequency')
+    plt.legend(frameon=False)
+    plt.show()
+
+
+"""
+This function creates and saves a grouped bar chart.
+"""
+def grouped_barchart(data, cols):
+    data = data[cols]
+    data = data.groupby('cluster').sum()
+    plt.subplots()
+    n_clusters = len(data.index)
+    index = np.arange(n_clusters)
+    bar_width = 0.2
+    plt.bar(index, data[cols[1]], bar_width, color='#80d4ff', label=cols[1])
+    plt.bar(index + bar_width, data[cols[2]], bar_width, color='#ff99ff', label=cols[2])
+    plt.bar(index + 2 * bar_width, data[cols[3]], bar_width, color='#33ff77', label=cols[3])
+    plt.bar(index + 3 * bar_width, data[cols[4]], bar_width, color='#ffad33', label=cols[4])
+    plt.xlabel('Cluster')
+    plt.ylabel('Total duration at each sleep stage')
+    plt.xticks(data.index)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
