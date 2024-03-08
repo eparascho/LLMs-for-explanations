@@ -1,8 +1,9 @@
 import time
 from ClustersFeatures import *
 from matplotlib import pyplot as plt
-from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
+from sklearn.metrics import pairwise_distances
 from sklearn.cluster import KMeans, SpectralClustering
+from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
 
 
 """
@@ -89,42 +90,6 @@ def evaluation_metrics(data):
     print("calculating Silhouette score ... ")
     print("The Silhouette score is:", silhouette_score(data.iloc[:, :-1], data['cluster']))
 
-    # initialize ClustersCharacteristics object
-    print("initializing object ... ")
-    cc = ClustersCharacteristics(data, label_target='cluster')
-
-    print("calculating all the scores ... ")
-    cc.compute_every_index()
-
-    # Davies-Bouldin Index
-    # print("calculating DB index ... ")
-    # print("The Davies-Bouldin Index is:", cc.score_index_davies_bouldin())
-    #
-    # # Calinski-Harabasz Index
-    # print("calculating CH index ... ")
-    # print("The Calinski-Harabasz Index is:", cc.score_index_calinski_harabasz())
-    #
-    # # Dunn index
-    # print("calculating Dunn index ... ")
-    # print("The Dunn Index is:", cc.score_index_dunn())
-    #
-    # # PBM index
-    # print("calculating PBM index ... ")
-    # print("The PBM Index is:", cc.score_index_PBM())
-    #
-    # # Xie-Beni index
-    # print("calculating XB index ... ")
-    # print("The Xie-Beni Index is:", cc.score_index_xie_beni())
-
-
-"""
-This function calculates and prints the clustering evaluation metrics
-"""
-def evaluation_metrics_old(data):
-    # Silhouette score
-    print("calculating Silhouette score ... ")
-    print("The Silhouette score is:", silhouette_score(data.iloc[:, :-1], data['cluster']))
-
     # Davies-Bouldin Index
     print("calculating DB index ... ")
     print("The Davies-Bouldin Index is:", davies_bouldin_score(data.iloc[:, :-1], data['cluster']))
@@ -132,3 +97,35 @@ def evaluation_metrics_old(data):
     # Calinski-Harabasz Index
     print("calculating CH index ... ")
     print("The Calinski-Harabasz Index is:", calinski_harabasz_score(data.iloc[:, :-1], data['cluster']))
+
+    # Dunn Index
+    print("calculating Dunn index ... ")
+    features = data.iloc[:, :-1]
+    centroids = features.groupby(data['cluster']).mean()
+    intra_cluster_distances = features.groupby(data['cluster']).transform(lambda x: (x - x.mean()) ** 2)
+    intra_cluster_distances = np.sqrt(intra_cluster_distances.sum(axis=1))
+    inter_cluster_distances = pairwise_distances(centroids)
+    np.fill_diagonal(inter_cluster_distances, np.inf)
+    dunn_numerator = np.min(inter_cluster_distances)
+    dunn_denominator = np.max(intra_cluster_distances.groupby(data['cluster']).max())
+    dunn_index = dunn_numerator / dunn_denominator
+    print("The Dunn Index is:", dunn_index)
+
+    # PBM Index
+    print("calculating PBM index ... ")
+    overall_centroid = features.mean()
+    total_intra_cluster_distance = intra_cluster_distances.sum()
+    sum_squared_distances_to_centroid = ((features - overall_centroid) ** 2).sum(axis=1).sum()
+    number_of_clusters = centroids.shape[0]
+    E1 = sum_squared_distances_to_centroid
+    Ek = total_intra_cluster_distance
+    Dk = np.max(pairwise_distances(centroids, [overall_centroid]))
+    pbm_index = (E1 * Dk / (Ek * number_of_clusters)) ** 2
+    print("The PBM is:", pbm_index)
+
+    # Xie-Beni Index
+    print("calculating Xie-Beni index ... ")
+    number_of_points = features.shape[0]
+    min_inter_cluster_distance = np.min(inter_cluster_distances)
+    xie_beni_index = total_intra_cluster_distance / (number_of_points * min_inter_cluster_distance)
+    print("The Xie-Beni is:", xie_beni_index)
