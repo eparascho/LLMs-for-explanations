@@ -158,39 +158,57 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
-/config.env
+
+# folder: loading_final
 /data/loading_final/fitbit.pkl
 /data/loading_final/fitbit_surveys.pkl
 /data/loading_final/fitbit_surveys_semas.pkl
-/data/preprocessing_temps/encoded_training_df.pkl
-/data/preprocessing_temps/basic_preprocessed_training_df.pkl
-/data/preprocessing_temps/cleaned_encoded_training_df.pkl
+/data/loading_final/daily_fitbit.pkl
+/data/loading_final/daily_fitbit_surveys.pkl
+/data/loading_final/daily_fitbit_surveys_semas.pkl
+
+# folder: granularities_temps
 /data/granularities_temps/after_behavior_granularities_df.pkl
 /data/granularities_temps/after_duration_exercise_training_df.pkl
 /data/granularities_temps/after_past_day_training_df.pkl
 /data/granularities_temps/after_rest_day_training_df.pkl
 /data/granularities_temps/after_whole_day_training_df.pkl
-/data/preprocessing_temps/dropped_columns_training_df.pkl
-/data/preprocessing_temps/nan_preprocessed_training_df.pkl
-/data/preprocessing_temps/final_preprocessed_training_df.pkl
-/data/preprocessing_temps/date_engineered_training_df.pkl
-/data/preprocessing_temps/preprocessed_training_df.pkl
-/data/feature_elimination_temps/correlation_training_df.pkl
-/data/preprocessing_temps/dropped_rows_training_df.pkl
-/data/clustering_results/hdbscan_results.csv
+
+# folder: clustering_input
 /data/clustering_input/clustering_df_full.pkl
+/data/clustering_input/clustering_df_daily_full.pkl
 /data/clustering_input/clustering_df_categories.pkl
+/data/clustering_input/clustering_df_clean.pkl
+
+# folder: labeling_visualizations
 /data/labeling_visualizations/kmeans_categories_labeling.pkl
 /data/labeling_visualizations/hdbscan_full_labeling.pkl
 /data/labeling_visualizations/hdbscan_full_labeling_processed.pkl
 /data/labeling_visualizations/kmeans_full_labeling.pkl
 /data/labeling_visualizations/kmeans_full_labeling_processed.pkl
-/data/preprocessing_final/labeling_df_unprocessed.pkl
-/data/preprocessing_final/training_df_unprocessed.pkl
-/data/preprocessing_final/labeling_df_processed.pkl
 /data/labeling_visualizations/hdbscan_categories_labeling.pkl
-/data/clustering_input/clustering_df_clean.pkl
 /data/labeling_visualizations/kmeans_clean_labeling.pkl
-/data/loading_final/daily_fitbit.pkl
-/data/loading_final/daily_fitbit_surveys.pkl
-/data/loading_final/daily_fitbit_surveys_semas.pkl
+
+# folder: preprocessing_final
+/data/preprocessing_final/labeling_df_hourly_unprocessed.pkl
+/data/preprocessing_final/labeling_df_daily_unprocessed.pkl
+/data/preprocessing_final/training_df_daily_unprocessed.pkl
+/data/preprocessing_final/training_df_hourly_unprocessed.pkl
+
+# folder: preprocessing_temps
+/data/preprocessing_temps/encoded_training_df.pkl
+/data/preprocessing_temps/basic_preprocessed_training_df.pkl
+/data/preprocessing_temps/basic_preprocessed_daily_training_df.pkl
+/data/preprocessing_temps/cleaned_encoded_training_df.pkl
+/data/preprocessing_temps/cleaned_daily_training_df.pkl
+/data/preprocessing_temps/dropped_columns_training_df.pkl
+/data/preprocessing_temps/dropped_columns_daily_training_df.pkl
+/data/preprocessing_temps/final_preprocessed_training_df.pkl
+/data/preprocessing_temps/final_preprocessed_daily_training_df.pkl
+/data/preprocessing_temps/date_engineered_training_df.pkl
+/data/preprocessing_temps/date_engineered_daily_training_df.pkl
+/data/preprocessing_temps/preprocessed_training_df_hourly.pkl
+/data/preprocessing_temps/preprocessed_training_df_daily.pkl
+/data/preprocessing_temps/dropped_rows_training_df.pkl
+/data/preprocessing_temps/dropped_rows_daily_training_df.pkl
+/data/preprocessing_temps/surveys_preprocessed_daily_training.pkl
