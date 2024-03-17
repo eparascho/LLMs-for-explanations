@@ -194,6 +194,8 @@ cython_debug/
 /data/preprocessing_final/labeling_df_daily_unprocessed.pkl
 /data/preprocessing_final/training_df_daily_unprocessed.pkl
 /data/preprocessing_final/training_df_hourly_unprocessed.pkl
+/data/preprocessing_final/labeling_df_hourly_processed.pkl
+/data/preprocessing_final/labeling_df_daily_processed.pkl
 
 # folder: preprocessing_temps
 /data/preprocessing_temps/encoded_training_df.pkl
