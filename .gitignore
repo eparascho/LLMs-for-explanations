@@ -179,6 +179,8 @@ cython_debug/
 /data/clustering_input/clustering_df_daily_full.pkl
 /data/clustering_input/clustering_df_categories.pkl
 /data/clustering_input/clustering_df_clean.pkl
+/data/clustering_input/clustering_df_daily_categories.pkl
+/data/clustering_input/clustering_df_daily_clean.pkl
 
 # folder: labeling_visualizations
 /data/labeling_visualizations/kmeans_categories_labeling.pkl

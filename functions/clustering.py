@@ -9,7 +9,7 @@ from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_har
 """
 This function implements the elbow method to find the optimal number of clusters.
 """
-def elbow_method(model_name, data_version, data):
+def elbow_method(model_name, granularity, data_version, data):
     # perform elbow method
     print("Performing the elbow method ... ")
     start = time.time()
@@ -33,15 +33,14 @@ def elbow_method(model_name, data_version, data):
     plt.title("Elbow Plot")
     plt.xlabel("Number of Clusters")
     plt.ylabel("SSE")
-    filename = '../images/elbow_' + model_name + '_' + data_version + '.png'
+    filename = '../images/elbows/elbow_' + model_name + '_' + granularity + '_' + data_version + '.png'
     plt.savefig(filename)
-    plt.show()
 
 
 """
 This function implements the silhouette score method to find the optimal number of clusters.
 """
-def silhouette_method(model_name, data_version, data):
+def silhouette_method(model_name, granularity, data_version, data):
     # perform silhouette method
     print("Performing the silhouette method ... ")
     start = time.time()
@@ -65,9 +64,8 @@ def silhouette_method(model_name, data_version, data):
     plt.title("Silhouette Plot")
     plt.xlabel("Number of Clusters")
     plt.ylabel("Silhouette score")
-    filename = '../images/silhouette_' + model_name + '_' + data_version + '.png'
+    filename = '../images/silhouettes/silhouette_' + model_name + '_' + granularity + '_' + data_version + '.png'
     plt.savefig(filename)
-    plt.show()
 
 
 """
