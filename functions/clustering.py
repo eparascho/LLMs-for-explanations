@@ -1,4 +1,5 @@
 import time
+from fcmeans import FCM
 from ClustersFeatures import *
 from matplotlib import pyplot as plt
 from sklearn.metrics import pairwise_distances
@@ -69,13 +70,34 @@ def silhouette_method(model_name, granularity, data_version, data):
 
 
 """
+This function implements the silhouette_score scoring for the parameter searching
+"""
+def silhouette_scorer(model, data):
+    clusters = model.fit_predict(data)
+    if 1 < len(np.unique(clusters)) < len(data):
+        sil_score = silhouette_score(data, clusters)  # performance of the clusterign under these parameters
+    else:
+        sil_score = -1  # if the clustering returns only 1 cluster, then silhouette score can not be computed and returns -1 as silhouette score
+    return sil_score
+
+
+"""
 This function perform the clustering based on the corresponding initialized model
 """
-def perform_clustering(model, data, metadata):
-    y = model.fit_predict(data)
-    model_data = data.copy()
-    model_data['cluster'] = y
-    model_data = pd.concat([metadata, model_data], axis=1)
+def perform_clustering(model, data, metadata, model_name):
+    if model_name == 'fuzzy': 
+        data = data.values
+        model.fit(data)
+        y = model.predict(data)
+        data = pd.DataFrame(data)
+        model_data = data.copy()
+        model_data['cluster'] = y
+        model_data = pd.concat([metadata, model_data], axis=1)
+    else:
+        y = model.fit_predict(data)
+        model_data = data.copy()
+        model_data['cluster'] = y
+        model_data = pd.concat([metadata, model_data], axis=1)
 
     return model_data
 
