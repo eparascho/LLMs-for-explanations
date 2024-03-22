@@ -24,7 +24,7 @@ This function creates and saves a boxplot.
 """
 def boxplot(data, col, where, model, version):
     plt.figure(figsize=(8, 6))
-    ax = sns.boxplot(x='cluster', y=col, data=data, palette=['#ffcc99', '#ccccff', '#ffffcc', '#ccffe6', '#b3e6ff'])
+    ax = sns.boxplot(x='cluster', y=col, data=data, palette=['#ccccff', '#ffff99'])
     if col != 'nightly_temperature':  # nightly_temperature raises error when visualizing and need special handling
         do_annotation(data, ax, col)
     plt.xlabel('Cluster')
@@ -62,21 +62,17 @@ def bar_plot(data, col, model, version):
 This function creates and saves a histogram.
 """
 def histogram(data, col):
-    if col == 'responsiveness_points' or col == 'resting_heart_rate' or col == 'stress_score':
+    if col == 'responsiveness_points' or col == 'resting_heart_rate' or col == 'stress_score' or col == 'rem_sleep_breathing_rate' or col == 'full_sleep_breathing_rate' or col == 'deep_sleep_breathing_rate':
         data = data[data[col] != 0]  # remove 0s from the data
-
+    
     # dataframe for each cluster
     c0_df = data[data['cluster'] == 0]
     c1_df = data[data['cluster'] == 1]
-    c2_df = data[data['cluster'] == 2]
-    c3_df = data[data['cluster'] == 3]
 
     # plot histograms
     plt.figure(figsize=(8, 6))
     sns.kdeplot(data=c0_df[col], label='C0', color='#9999ff', fill=True, alpha=0.3)
     sns.kdeplot(data=c1_df[col], label='C1', color='#ffff66', fill=True, alpha=0.3)
-    sns.kdeplot(data=c2_df[col], label='C2', color='#66ffb5', fill=True, alpha=0.3)
-    sns.kdeplot(data=c3_df[col], label='C3', color='#ffb366', fill=True, alpha=0.3)
     plt.xlabel(col)
     plt.ylabel('frequency')
     plt.legend(frameon=False)
