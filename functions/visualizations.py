@@ -24,7 +24,7 @@ This function creates and saves a boxplot.
 """
 def boxplot(data, col, where, model, version):
     plt.figure(figsize=(8, 6))
-    ax = sns.boxplot(x='cluster', y=col, data=data, palette=['#ccccff', '#ffff99'])
+    ax = sns.boxplot(x='cluster', y=col, data=data, palette=['#ffff99', '#ccccff'])
     if col != 'nightly_temperature':  # nightly_temperature raises error when visualizing and need special handling
         do_annotation(data, ax, col)
     plt.xlabel('Cluster')
