@@ -1,0 +1,18 @@
+{
+    "exertion_points": 0.6229281767955801,
+    "step_goal": 0.0,
+    "minutes_below_zone_1": 0.6000000000000001,
+    "minutes_in_zone_1": 0.0811339198435972,
+    "steps": 0.0175625332623736,
+    "very_active_minutes": 0.0806845965770171,
+    "minutes_in_zone_2": 0.0,
+    "minutes_in_zone_3": 0.0,
+    "altitude": 0.0,
+    "lightly_active_minutes": 0.2547008547008547,
+    "moderately_active_minutes": 0.0830449826989619,
+    "sedentary_minutes": 0.9201388888888888,
+    "exercises": 0.074074074074074,
+    "exercise_duration": 0.0018648210955676,
+    "sleep_points": 0.8104693140794226,
+    "calories": 0.0
+}
