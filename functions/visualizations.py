@@ -59,7 +59,7 @@ def bar_plot(data, col, model, version):
 
 
 """
-This function creates and saves a histogram.
+This function creates a histogram.
 """
 def histogram(data, col):
     if col == 'responsiveness_points' or col == 'resting_heart_rate' or col == 'stress_score' or col == 'rem_sleep_breathing_rate' or col == 'full_sleep_breathing_rate' or col == 'deep_sleep_breathing_rate':
@@ -80,7 +80,7 @@ def histogram(data, col):
 
 
 """
-This function creates and saves a grouped bar chart.
+This function creates a grouped bar chart.
 """
 def grouped_barchart(data, cols):
     data = data[cols]
@@ -99,3 +99,23 @@ def grouped_barchart(data, cols):
     plt.legend()
     plt.tight_layout()
     plt.show()
+
+
+"""
+This function creates an ordered bar chart.
+"""
+def explainability_barplot(data, model):
+    data = data.sort_values(by='value', ascending=False)
+    data = data[(data['value'] <= -0.001) | (data['value'] >= 0.001)]
+    plt.figure(figsize=(10, 6))
+    colors = ['#ff5c33' if x < 0 else '#79d279' for x in data['value']]
+    bars = plt.bar(data['feature'], data['value'], color=colors)
+    for bar in bars:
+        y_val = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, y_val, f'{y_val:.3f}', ha='center', va='bottom' if y_val < 0 else 'top', fontsize=8, color='black')
+    plt.xlabel('Features')
+    plt.ylabel('Importance/Coefficient')
+    plt.xticks(rotation=90)
+    plt.tight_layout()
+    filename = '../images/explainability_outputs/' + model + '.png'
+    plt.savefig(filename)
