@@ -1,3 +1,4 @@
+import math
 import readability
 import language_tool_python
 from textblob import TextBlob
@@ -73,3 +74,17 @@ def structural_quality_evaluation(query, response):
     print('Sentiment Consistency Score:', sentiment)
     print('Concepts Covered:', coverage)
     print('New Concepts Introduced:', concepts)
+
+
+'''
+This function calculates the content quality evaluation metric having as groundtruth the results of the respective XAI method.
+'''
+def content_xai_quality_evaluation(xai_response, llm_response):
+    # Calculate Euclidean distance
+    distance = 0.0
+    for key in xai_response:
+        if key in llm_response:
+            distance += (xai_response[key] - llm_response[key]) ** 2
+        else:
+            distance += xai_response[key] ** 2
+    print('Relative distance between global LIME feature importance vs. LLM feature importance', math.sqrt(distance))
