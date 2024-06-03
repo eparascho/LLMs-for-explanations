@@ -33,7 +33,7 @@ This function calculates the readability score of the response.
 '''
 def readability_score(response):
     results = readability.getmeasures(response, lang='en')
-    return results['readability grades']['ARI']
+    return results['readability grades']['FleschReadingEase']
 
 
 '''
@@ -56,7 +56,7 @@ def concept_coverage(query, response):
     response_concepts = set([feature_names[i] for i in tfidf[1].nonzero()[1]])
     coverage = query_concepts.intersection(response_concepts)
     concepts = response_concepts.difference(query_concepts)
-    return coverage, concepts
+    return coverage, concepts, len(query_concepts), len(response_concepts)
 
 
 '''
@@ -67,12 +67,14 @@ def structural_quality_evaluation(query, response):
     grammatical = grammatical_errors(response)
     readability = readability_score(response)
     sentiment = sentiment_consistency(query, response)
-    coverage, concepts = concept_coverage(query, response)
+    coverage, concepts, query_concepts, response_concepts = concept_coverage(query, response)
     print('Coherence/Relevance Score:', coherence)
     print('Number of Grammatical Errors:', grammatical)
-    print('Automated Readability Index:', readability)
+    print('Flesch Reading Ease:', readability)
     print('Sentiment Consistency Score:', sentiment)
+    print('Percentage of concepts covered:', len(coverage)/query_concepts)
     print('Concepts Covered:', coverage)
+    print('Percentage of new concepts introduced:', len(concepts)/response_concepts)
     print('New Concepts Introduced:', concepts)
 
 
