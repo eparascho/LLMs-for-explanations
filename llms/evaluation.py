@@ -1,7 +1,10 @@
-import math
+import numpy as np
 import readability
+import pandas as pd
 import language_tool_python
 from textblob import TextBlob
+from scipy.stats import spearmanr
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sentence_transformers import SentenceTransformer, util
 
@@ -33,7 +36,7 @@ This function calculates the readability score of the response.
 '''
 def readability_score(response):
     results = readability.getmeasures(response, lang='en')
-    return results['readability grades']['FleschReadingEase']
+    return results['readability grades']['ARI']
 
 
 '''
@@ -79,14 +82,60 @@ def structural_quality_evaluation(query, response):
 
 
 '''
+This function calculates the spearman rank correlation between the groundtruth and the LLM importances.
+'''
+def spearman_rank(df):
+    spearman_corr, _ = spearmanr(df['rank_xai'], df['rank_llm'])
+
+    return spearman_corr
+
+
+'''
+This function implements the dcg
+'''
+def dcg_at_k(r, k):
+    r = np.asfarray(r)[:k]
+    if r.size:
+        return np.sum(r / np.log2(np.arange(2, r.size + 2)))
+    return 0.
+
+
+'''
+This function implements the ndcg
+'''
+def ndcg_at_k(r, k):
+    dcg_max = dcg_at_k(sorted(r, reverse=True), k)
+    if not dcg_max:
+        return 0.
+    return dcg_at_k(r, k) / dcg_max
+
+
+'''
+This function calculates the NDCG between the groundtruth and the LLM importances.
+'''
+def ndcg(df):
+    ndcg_xai = ndcg_at_k(df['rank_xai'], len(df))
+    ndcg_llm = ndcg_at_k(df['rank_llm'], len(df))
+
+    return abs(ndcg_xai - ndcg_llm)
+
+
+'''
 This function calculates the content quality evaluation metric having as groundtruth the results of the respective XAI method.
 '''
 def content_xai_quality_evaluation(xai_response, llm_response):
-    # Calculate Euclidean distance
-    distance = 0.0
-    for key in xai_response:
-        if key in llm_response:
-            distance += (xai_response[key] - llm_response[key]) ** 2
-        else:
-            distance += xai_response[key] ** 2
-    print('Relative distance between global LIME feature importance vs. LLM feature importance', math.sqrt(distance))
+    # processing of the data
+    scaler = MinMaxScaler()
+    df_xai = pd.DataFrame(list(xai_response.items()), columns=['feature', 'value'])
+    df_xai['value'] = scaler.fit_transform(df_xai[['value']])
+    df_llm = pd.DataFrame(list(llm_response.items()), columns=['feature', 'value'])
+    df_llm['value'] = scaler.fit_transform(df_llm[['value']])
+    df_merged = pd.merge(df_xai, df_llm, on='feature', suffixes=('_xai', '_llm'))  # it takes only the similar features
+    df_merged['rank_xai'] = df_merged['value_xai'].rank()
+    df_merged['rank_llm'] = df_merged['value_llm'].rank()
+
+    # compute and print the metrics
+    spearman_corr = spearman_rank(df_merged)
+    ndcg_dif = ndcg(df_merged)
+    print('Spearman Rank Correlation:', spearman_corr)
+    print('NDCG Difference:', ndcg_dif)

@@ -42,3 +42,49 @@ def zero_prompt(data, instance, target, target_encoding, granularity, task):
     zero_prompt = zero_prompt.replace('_', ' ')
 
     return zero_prompt
+
+
+''' 
+This function generates a prompt in the one-shot learning setting for a given instance in the dataset.
+'''
+def one_prompt(data, instance_interpret, example_instance, target, target_encoding, granularity, task, xai_response):    
+    # standard prompt part
+    one_prompt = ("A user on " + pd.to_datetime(data.loc[example_instance, 'date']).day_name())
+
+    # granularity prompt part
+    if granularity == 'hourly':
+        time_part = (" at " + str(pd.to_datetime(data.loc[example_instance, 'date']).hour) + " o'clock")
+        one_prompt += time_part
+
+    # starting the features prompt part
+    features_intro_part = (", who has ") 
+    one_prompt += features_intro_part
+
+    # features prompt part
+    features = list(data.columns)
+    for feature in features:
+        if feature != 'id' and feature != 'date' and feature != target:
+            if feature == features[-2]:
+                feature_part = ("and " + str(data.loc[example_instance, feature]) + " " + feature + ", has also ")
+                one_prompt += feature_part
+            else:
+                feature_part = (str(data.loc[example_instance, feature]) + " " + feature + ", ")
+                one_prompt += feature_part
+
+    # target prompt part
+    if data.loc[example_instance, target] == list(target_encoding.keys())[0]:
+        target_part = (str(target_encoding[0]) + " ")
+    else:
+        target_part = (str(target_encoding[1]) + " ")
+    one_prompt += target_part
+    
+    # task prompt part
+    one_prompt += (str(task) + ". ")
+
+    # explanation prompt part
+    one_prompt += ("The explanation for this user's " + task + " gives the following feature importances: " + str(xai_response) + " . ") 
+
+    # the zero-shot learning prompt part
+    one_prompt += zero_prompt(data, instance_interpret, target, target_encoding, granularity, task)
+
+    return one_prompt
