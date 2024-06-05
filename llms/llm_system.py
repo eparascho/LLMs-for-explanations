@@ -1,5 +1,5 @@
 
-def create_system(ml_task, granularity, target_encoding, target, real_task, learning, scope, xai_method):
+def create_system(ml_task, granularity, target_encoding, target, real_task, learning, scope, xai_method, examples):
     # ml task system content
     system_content = ("You are a XAI model that can help me explain the " + ml_task + " results of my data. ")
 
@@ -15,9 +15,19 @@ def create_system(ml_task, granularity, target_encoding, target, real_task, lear
 
     # learning technique system content
     if learning == 'one':
-        system_content += ("1 example which contains, in the first sentence, the features, values and " + ml_task + " result, and, in a second sentence, the explanation produced by the " + scope + " " + xai_method + " " + \
-        "XAI method, which is based on feature importance, to explain this " + ml_task + " result. After the example, there will be ")
+        system_content += examples + " example which "
+    elif learning == 'few':
+        system_content += examples + " examples each one "
 
+    if learning == 'one' or learning == 'few':
+        system_content += ("contains, in the first sentence, the features, values and " + ml_task + " result, and, in a second sentence, the explanation produced by the " + scope + " " + xai_method + " " + \
+        "XAI method, which is based on feature importance, to explain this " + ml_task + " result. After the ")
+
+    if learning == 'one':
+        system_content += "example, there will be "
+    elif learning == 'few':
+        system_content += "examples, there will be "
+     
     # standard technique system content
     system_content += ("a question containing features and their actual values. You need to compute the feature importance and explain the " + ml_task + " results based on this feature importance. " + \
     "Your answer must contain only the exact following two parts: " + \
