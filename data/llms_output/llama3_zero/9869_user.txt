@@ -1,0 +1,1 @@
+Based on the feature importance, it seems that the user's low exertion points (19,251) and high sedentary minutes (875) have contributed to their negative well-being on Saturday at 20 o'clock. Additionally, the lack of steps (0.0) and moderate physical activity minutes (27.0) may have also played a role in this categorization.

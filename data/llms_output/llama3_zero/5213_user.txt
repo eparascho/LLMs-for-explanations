@@ -1,0 +1,1 @@
+Based on the feature importance, we can see that the user's exertion points (25.299) are moderately important in determining their positive well-being at 2 o'clock on Monday. The amount of sedentary time (592 minutes) and sleep quality (19.607 sleep points) also play a significant role in categorizing them into cluster 1, representing positive well-being.

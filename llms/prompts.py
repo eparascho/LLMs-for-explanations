@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 
 
@@ -90,8 +91,10 @@ def example_prompt(data, example_instance, target, target_encoding, granularity,
 ''' 
 This function generates a prompt in the one-shot learning setting for a given instance in the dataset.
 '''
-def one_prompt(data, instance_interpret, example_instance, target, target_encoding, granularity, task, xai_response):    
+def one_prompt(data, instance_interpret, example_instance, target, target_encoding, granularity, task):    
     # the one example prompt part
+    with open(f'../data/explainability_output/local_lime_{example_instance}.json') as f:
+        xai_response = json.load(f)
     one_prompt = example_prompt(data, example_instance, target, target_encoding, granularity, task, xai_response)
 
     # the zero-shot learning prompt part
@@ -103,10 +106,12 @@ def one_prompt(data, instance_interpret, example_instance, target, target_encodi
 ''' 
 This function generates a prompt in the few-shot learning setting for a given instance in the dataset.
 '''
-def few_prompt(data, instance_interpret, example_instances, target, target_encoding, granularity, task, xai_response):
+def few_prompt(data, instance_interpret, example_instances, target, target_encoding, granularity, task):
     # the few example prompt part
     few_prompt = ""
-    for example_instance in example_instances:    
+    for example_instance in example_instances:
+        with open(f'../data/explainability_output/local_lime_{example_instance}.json') as f:
+            xai_response = json.load(f)   
         few_prompt += example_prompt(data, example_instance, target, target_encoding, granularity, task, xai_response)
 
     # the zero-shot learning prompt part

@@ -1,0 +1,1 @@
+The user on Tuesday at 16 o'clock has a high number of minutes below zone 1 (494.0) and a large amount of sedentary minutes (1285.0), both of which have negative feature importances. These features indicate that the user is spending a significant amount of time in low-intensity or inactive states, which may contribute to negative well-being according to the clustering algorithm.

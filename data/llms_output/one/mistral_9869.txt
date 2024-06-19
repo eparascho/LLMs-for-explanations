@@ -1,0 +1,3 @@
+ Developer response: {"minutes_below_zone_1": -0.4133235859623715, "sedentary_minutes": -0.31595691304323136, "exertion_points": 0.1827229229233896, "sleep_points": 0.05658735597823547}
+
+User response: The user on Saturday at 20 o'clock has a high number of minutes below zone 1 (-0.413) and sedentary minutes (-0.316), which are the top two contributing factors to their negative well-being. Their exertion points (0.183) and sleep points (0.057) have relatively small impacts on their clustering result.

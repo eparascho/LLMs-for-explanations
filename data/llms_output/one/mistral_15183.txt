@@ -1,0 +1,3 @@
+ Developer response: {"minutes_below_zone_1": 0.1923584433428531, "lightly_active_minutes": 0.2376373141533833, "exertion_points": 0.13858645933366695, "sleep_points": 0.1255551118551471, "steps": 0.0254684626522578}
+
+User response: This user's positive well-being can be attributed to having a relatively large number of lightly active minutes, high exertion points, and a satisfactory sleep quality based on the feature importances. Their low amount of time spent below their target heart rate zone and high number of steps contribute less to this result.

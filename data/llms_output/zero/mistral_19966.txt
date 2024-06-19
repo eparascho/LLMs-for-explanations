@@ -1,0 +1,11 @@
+ Developer response:
+
+```json
+"minutes below zone 1": 640.09,
+ "minutes in zone 2": 18.876,
+ "calories": 0.9"":
+}
+```
+
+User response:
+Based on the feature importance computed, we can see that the user's extended periods below their target heart rate zone (Zone 1) and time spent in Zone 2 contribute to negative well-being. This user had a total of 640.09 minutes below Zone 1 and only 18.876 minutes in Zone 2 on Saturday at 22 o'clock. Additionally, they had a low number of calories burned, which could also indicate a lack of physical activity contributing to negative well-being.

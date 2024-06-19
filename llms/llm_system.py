@@ -1,4 +1,6 @@
-
+'''
+This function sets the system content for the LLM system.
+'''
 def create_system(ml_task, granularity, target_encoding, target, real_task, learning, scope, xai_method, examples):
     # ml task system content
     system_content = ("You are a XAI model that can help me explain the " + ml_task + " results of my data. ")

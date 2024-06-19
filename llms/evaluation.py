@@ -1,9 +1,15 @@
+import json
+import nltk
 import numpy as np
 import readability
 import pandas as pd
+from statistics import mean
 import language_tool_python
 from textblob import TextBlob
 from scipy.stats import spearmanr
+from nltk.stem import PorterStemmer
+from nltk.stem import WordNetLemmatizer
+from scipy.spatial.distance import euclidean
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sentence_transformers import SentenceTransformer, util
@@ -57,9 +63,29 @@ def concept_coverage(query, response):
     feature_names = vectorizer.get_feature_names_out()
     query_concepts = set([feature_names[i] for i in tfidf[0].nonzero()[1]])
     response_concepts = set([feature_names[i] for i in tfidf[1].nonzero()[1]])
+
+    # remove numbers, stopwrods and lowercse everything in query and response concepts
+    query_concepts = set([c for c in query_concepts if not any(char.isdigit() for char in c)])
+    response_concepts = set([c for c in response_concepts if not any(char.isdigit() for char in c)])
+    query_concepts = set([c for c in query_concepts if c not in vectorizer.get_stop_words()])
+    response_concepts = set([c for c in response_concepts if c not in vectorizer.get_stop_words()])
+    query_concepts = set([c.lower() for c in query_concepts])
+    response_concepts = set([c.lower() for c in response_concepts])
+
+    # perfrom stemming and lemmatization in query and response concepts
+    porter_stemmer = PorterStemmer()
+    query_concepts = [porter_stemmer.stem(word) for word in query_concepts]
+    response_concepts = [porter_stemmer.stem(word) for word in response_concepts]
+    lemmatizer = WordNetLemmatizer()
+    query_concepts = [lemmatizer.lemmatize(word) for word in query_concepts]
+    response_concepts = [lemmatizer.lemmatize(word) for word in response_concepts]
+    query_concepts = set(query_concepts)
+    response_concepts = set(response_concepts)
+
     coverage = query_concepts.intersection(response_concepts)
     concepts = response_concepts.difference(query_concepts)
-    return coverage, concepts, len(query_concepts), len(response_concepts)
+
+    return coverage, concepts, query_concepts, response_concepts
 
 
 '''
@@ -71,14 +97,10 @@ def structural_quality_evaluation(query, response):
     readability = readability_score(response)
     sentiment = sentiment_consistency(query, response)
     coverage, concepts, query_concepts, response_concepts = concept_coverage(query, response)
-    print('Coherence/Relevance Score:', coherence)
-    print('Number of Grammatical Errors:', grammatical)
-    print('Flesch Reading Ease:', readability)
-    print('Sentiment Consistency Score:', sentiment)
-    print('Percentage of concepts covered:', len(coverage)/query_concepts)
-    print('Concepts Covered:', coverage)
-    print('Percentage of new concepts introduced:', len(concepts)/response_concepts)
-    print('New Concepts Introduced:', concepts)
+    final_coverage = len(coverage)/len(query_concepts)
+    final_concepts = len(concepts)/len(response_concepts)
+
+    return coherence, grammatical, readability, sentiment, final_coverage, final_concepts
 
 
 '''
@@ -121,9 +143,25 @@ def ndcg(df):
 
 
 '''
+This function calculates the euclidean distance between the groundtruth and the LLM importances.
+'''
+def euclidean_dist(xai_response, llm_response):
+    common_keys = set(xai_response.keys()).intersection(set(llm_response.keys()))
+    lime_values = [xai_response[key] for key in common_keys]
+    llm_values = [llm_response[key] for key in common_keys]
+    
+    return euclidean(lime_values, llm_values)
+
+
+'''
 This function calculates the content quality evaluation metric having as groundtruth the results of the respective XAI method.
 '''
-def content_xai_quality_evaluation(xai_response, llm_response):
+def content_xai_quality_evaluation(instance_interpret, llm_response):
+
+    # load the explanation
+    with open(f'../data/explainability_output/local_lime_{instance_interpret}.json') as f:
+        xai_response = json.load(f)   
+
     # processing of the data
     scaler = MinMaxScaler()
     df_xai = pd.DataFrame(list(xai_response.items()), columns=['feature', 'value'])
@@ -137,5 +175,50 @@ def content_xai_quality_evaluation(xai_response, llm_response):
     # compute and print the metrics
     spearman_corr = spearman_rank(df_merged)
     ndcg_dif = ndcg(df_merged)
-    print('Spearman Rank Correlation:', spearman_corr)
-    print('NDCG Difference:', ndcg_dif)
+    eucl_dist = euclidean_dist(xai_response, llm_response)
+
+    return spearman_corr, ndcg_dif, eucl_dist
+
+
+'''
+This function appends in the corresponding lists the evaluation metrics for each instance.
+'''
+def instance_evaluation(coherences, grammaticals, readabilities, sentiments, conc_covs, conc_intrs, spearman_corrs, ndcg_difs, eucl_dists, prompt, user_response, instance_interpret, developer_response):
+    coherence, grammatical, readability, sentiment, conc_cov, conc_intr = structural_quality_evaluation(prompt, user_response)
+    coherences.append(coherence)
+    grammaticals.append(grammatical)
+    readabilities.append(readability)
+    sentiments.append(sentiment)
+    conc_covs.append(conc_cov)
+    conc_intrs.append(conc_intr)
+    spearman_corr, ndcg_dif, eucl_dist = content_xai_quality_evaluation(instance_interpret, developer_response)
+    spearman_corrs.append(spearman_corr)
+    ndcg_difs.append(ndcg_dif)
+    eucl_dists.append(eucl_dist)
+
+    return coherences, grammaticals, readabilities, sentiments, conc_covs, conc_intrs, spearman_corrs, ndcg_difs, eucl_dists
+
+
+'''
+This function prints all the aggregated evaluation metrics.
+'''
+def aggregated_evaluation(model, learning, coherences, grammaticals, readabilities, sentiments, conc_covs, conc_intrs, spearman_corrs, ndcg_difs, eucl_dists):
+    print(model, ' in ', learning, '-shot learning: ')
+    coherences = [x for x in coherences if str(x) != 'nan']
+    print('Avg coherence:', mean(coherences))
+    grammaticals = [x for x in grammaticals if str(x) != 'nan']
+    print('Avg number of grammatical errors:', mean(grammaticals))
+    readabilities = [x for x in readabilities if str(x) != 'nan']
+    print('Avg ARI:', mean(readabilities))
+    sentiments = [x for x in sentiments if str(x) != 'nan']
+    print('Avg sentiment consistency:', mean(sentiments))
+    conc_covs = [x for x in conc_covs if str(x) != 'nan']
+    print('Avg percentage of concepts covered:', mean(conc_covs))
+    conc_intrs = [x for x in conc_intrs if str(x) != 'nan']
+    print('Avg percentage of new concepts introduced:', mean(conc_intrs))
+    spearman_corrs = [x for x in spearman_corrs if str(x) != 'nan']
+    print('Avg spearman rank correlation:', mean(spearman_corrs))
+    ndcg_difs = [x for x in ndcg_difs if str(x) != 'nan']
+    print('Avg NDCG differences:', mean(ndcg_difs))
+    eucl_dists = [x for x in eucl_dists if str(x) != 'nan']
+    print('Avg euclidean distances:', mean(eucl_dists))

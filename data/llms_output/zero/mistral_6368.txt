@@ -1,0 +1,3 @@
+ Developer response: {"exertion_points": 0.3, "minutes_below_zone_1": 0.7, "steps": 0, "minutes_in_zone_2": 0.1}
+
+User response: Based on the feature importance computed, high values of exertion points, minutes below zone 1, and minutes in Zone 2 are indicative of negative well-being. The user with 25.299 exertion points, 1021.459 minutes below zone 1, and 11.765 minutes in zone 2 was categorized into the cluster representing negative well-being. Low steps taken and no active minutes further contribute to this classification.

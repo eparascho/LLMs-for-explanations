@@ -1,0 +1,1 @@
+The user with the given features was categorized into the negative well-being cluster due to high exertion points (25.299) and extended periods of time (1440.0 minutes) spent in sedentary activities. Additionally, spending more than 124.972 minutes below zone 1 indicates insufficient physical activity. These factors contribute to a negative well-being state.

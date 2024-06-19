@@ -1,0 +1,38 @@
+A XAI model that helps explain clustering results!
+
+I'll use my language generation capabilities to analyze the features and their importances for each user's well-being.
+
+**Monday at 11 o'clock**
+The user's positive well-being is influenced by:
+* Lower sedentary minutes (-0.266987)
+* Higher lightly active minutes (0.168794)
+* Higher exertion points (0.115922)
+
+These features suggest that the user has a relatively healthy balance between rest and physical activity, which contributes to their positive well-being.
+
+**Wednesday at 9 o'clock**
+The user's positive well-being is influenced by:
+* Lower sedentary minutes (-0.266833)
+* Higher lightly active minutes (0.166305)
+* Higher exertion points (0.116989)
+
+Similar to the previous user, this individual has a mix of physical activity and rest, which contributes to their positive well-being.
+
+**Saturday at 5 o'clock**
+The user's negative well-being is influenced by:
+* High sedentary minutes (-0.266833)
+* Low exertion points (0.116989)
+* No moderately active minutes
+
+This user has a high amount of sedentary time, which may indicate a lack of physical activity, contributing to their negative well-being.
+
+**Tuesday at 16 o'clock**
+The user's negative well-being is influenced by:
+* High sedentary minutes (-0.266833)
+* Low exertion points (0.115922)
+* No very active minutes
+* Low altitude (10.0)
+
+This user has a high amount of sedentary time and low physical activity, which may be contributing to their negative well-being.
+
+In general, these results suggest that users with higher levels of physical activity (exertion points, lightly active minutes, moderately active minutes) tend to have positive well-being, while those with more sedentary time tend to have negative well-being.

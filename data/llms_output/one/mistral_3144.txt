@@ -1,0 +1,3 @@
+ Developer response: {"minutes_in_zone_1": 0.07252324853458155, "lightly_active_minutes": 0.1598168568225178, "exertion_points": 0.11267723353252766, "sleep_points": 0.0941426614524859}
+
+User response: The user on Friday at 11 o'clock has a higher number of lightly active minutes and sleep points compared to the time spent below zone 1 or sedentary. These two features have positive impacts on well-being, which explains why this user is classified in the positive well-being cluster despite having fewer steps and more minutes below zone 1 than the example user with positive well-being.

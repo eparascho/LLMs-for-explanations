@@ -1,0 +1,1 @@
+This user's positive well-being can be attributed to having a relatively large number of lightly active minutes, high exertion points, and a satisfactory sleep quality based on the feature importances. Their low amount of time spent below their target heart rate zone and high number of steps contribute less to this result.

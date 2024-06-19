@@ -1,0 +1,3 @@
+ Developer response: {"minutes_below_zone\_1": -0.5428345232155333, "sedentary_minutes": -0.4769251197549157, "exertion_points": 0.0485432621898735, "steps": 0.0, "sleep_points": 0.0}
+
+User response: Based on the feature importance, a high number of minutes below zone 1 and sedentary minutes are associated with negative well-being, while exertion points have a minor impact or even a positive effect on well-being for this user. Since this user has a large number of minutes below zone 1 and sedentary minutes, they are more likely to be categorized into the negative well-being cluster.
