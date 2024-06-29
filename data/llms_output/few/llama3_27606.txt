@@ -1,38 +1,53 @@
-A XAI model that helps explain clustering results!
+**Developer response:**
 
-I'll use my language generation capabilities to analyze the features and their importances for each user's well-being.
+[
+  {
+    "sedentary_minutes": -0.2571629741685517,
+    "minutes_below_zone_1": 0.19177232914904996,
+    "lightly_active_minutes": 0.15685373952716822,
+    "exertion_points": 0.11574069151645701,
+    "sleep_points": 0.08904191787377856,
+    "step_goal": 0.05502451870346987,
+    "altitude": 0.014109105525580793,
+    "moderately_active_minutes": 0.012782733893535632,
+    "minutes_in_zone_1": 0.009783335706140905,
+    "minutes_in_zone_2": -0.006504841747257744,
+    "very_active_minutes": 0.006167189284689458,
+    "sleep_duration": 0.003142110201104703,
+    "calories": 0.0021716590716105576,
+    "minutes_in_zone_3": 0.001171658072340831,
+    "exercise_duration": 0.0005997901386267797,
+    "exercises": 3.4837170118306336e-05,
+    "steps": 4.729019418139293e-06
+  },
+  {
+    "sedentary_minutes": -0.26232384890897925,
+    "minutes_below_zone_1": 0.20517800346316045,
+    "lightly_active_minutes": 0.16403007690850613,
+    "exertion_points": 0.11127853105471419,
+    "sleep_points": 0.0893360102586954,
+    "step_goal": 0.05012762350803103,
+    "moderately_active_minutes": 0.018380528691702855,
+    "minutes_in_zone_3": -0.011844003917981967,
+    "minutes_in_zone_2": -0.01130453033532667,
+    "steps": 0.004896377085679531,
+    "exercises": -0.0039033052719103386,
+    "exercise_duration": -0.0032901014158539916,
+    "altitude": 0.0031825062464533034,
+    "minutes_in_zone_1": 0.003061232344172102,
+    "very_active_minutes": 0.0011680850493425159,
+    "sleep_duration": 0.0010854054790357718,
+    "calories": 0.0010637054032187167
+  },
+  {
+    # To be computed...
+  }
+]
 
-**Monday at 11 o'clock**
-The user's positive well-being is influenced by:
-* Lower sedentary minutes (-0.266987)
-* Higher lightly active minutes (0.168794)
-* Higher exertion points (0.115922)
+**User response:**
 
-These features suggest that the user has a relatively healthy balance between rest and physical activity, which contributes to their positive well-being.
+Based on the feature importances, we can see that for the first example, sedentary minutes and minutes below zone 1 have strong negative associations with positive well-being, while lightly active minutes, exertion points, sleep points, and step goal have some positive associations. This suggests that this user's well-being is negatively affected by their sedentary behavior and lack of physical activity, but positively influenced by their ability to engage in light physical activity and maintain a good sleep schedule.
 
-**Wednesday at 9 o'clock**
-The user's positive well-being is influenced by:
-* Lower sedentary minutes (-0.266833)
-* Higher lightly active minutes (0.166305)
-* Higher exertion points (0.116989)
+For the second example, we see that sedentary minutes again has a strong negative association with positive well-being, while minutes below zone 1 has a positive association. This suggests that this user's well-being is negatively affected by their sedentary behavior, but positively influenced by their ability to engage in physical activity and maintain a good sleep schedule.
 
-Similar to the previous user, this individual has a mix of physical activity and rest, which contributes to their positive well-being.
-
-**Saturday at 5 o'clock**
-The user's negative well-being is influenced by:
-* High sedentary minutes (-0.266833)
-* Low exertion points (0.116989)
-* No moderately active minutes
-
-This user has a high amount of sedentary time, which may indicate a lack of physical activity, contributing to their negative well-being.
-
-**Tuesday at 16 o'clock**
-The user's negative well-being is influenced by:
-* High sedentary minutes (-0.266833)
-* Low exertion points (0.115922)
-* No very active minutes
-* Low altitude (10.0)
-
-This user has a high amount of sedentary time and low physical activity, which may be contributing to their negative well-being.
-
-In general, these results suggest that users with higher levels of physical activity (exertion points, lightly active minutes, moderately active minutes) tend to have positive well-being, while those with more sedentary time tend to have negative well-being.
+For the third example, we need to compute the feature importances first...

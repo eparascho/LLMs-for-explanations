@@ -1,0 +1,21 @@
+Developer response:
+{
+"1": {
+"description": "A user on Saturday at 22 o'clock, who has 28.0 exertion_ points, 9999.0 step_ goal, 1359.0 minutes_ below_ zone_1, 75.0 minutes_ in_ zone_1, 41.0 steps, 35.0 very_ active_ minutes, 0.0 minutes_ in_ zone_2, 0.0 minutes_ in_ zone_3, 10.0 altitude, 132.0 lightly_ active_ minutes, 18.0 moderately_ active_ minutes, 610.0 sedentary_ minutes, 2 exercises, 0.882 exercise_ duration, 30.0 sleep_ points, 0.0 sleep_ duration, and 10.48 calories, has also positive well- being.",
+"explanation": {
+"sedentary_minutes": -0.26232384890897925,
+"minutes_below_zone_1": 0.20517800346316045,
+"lightly_active_minutes": 0.16403007690850613,
+"exertion_points": 0.11127853105471419,
+"sleep_points": 0.0893360102586954,
+"step_goal": 0.05012762350803103,
+"moderately_active_minutes": 0.018380528691702855,
+"minutes_in_zone_3": -0.011844003917981967,
+"minutes_in_zone_2": -0.01130453033532667,
+"steps": 0.004896377085679531,
+"exercises": -0.0039033052719103386,
+"exercise_duration": -0.0032901014158539916,
+"altitude": 0.0031825062464533034,
+"minutes_in_zone_1": 0.003061232344172102,
+"very_active_minutes": 0.0011680850493425159,
+"slee

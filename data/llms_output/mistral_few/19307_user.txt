@@ -1,0 +1,1 @@
+The high sedentary minutes (1440.0) and low exertion points (-25.299), contribute negatively to this user's well-being, which explains why they have negative well-being. The small positive value of minutes in Zone 2 is not enough to counterbalance the large sedentary minutes and negative exertion points.

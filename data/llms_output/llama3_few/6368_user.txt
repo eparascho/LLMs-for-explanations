@@ -1,0 +1,1 @@
+The last description shows a user on Friday at 23 o'clock with negative well-being. Based on the feature importance, it appears that sedentary minutes have the most significant impact on this user's well-being, followed by minutes below zone 1 and lightly active minutes. This suggests that the user was inactive for an extended period, which negatively affected their well-being.

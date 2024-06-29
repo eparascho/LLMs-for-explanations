@@ -1,0 +1,1 @@
+Based on the given feature importances, we can conclude that decreasing sedentary time, spending more time below the optimal heart rate zone, increasing lightly active minutes, having a higher number of exertion points, and improving sleep quality (higher sleep points) are some of the features that contribute positively to well-being.
